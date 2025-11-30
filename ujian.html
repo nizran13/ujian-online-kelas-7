@@ -28,8 +28,8 @@
         /* Main Content & Sidebar Layout */
         .main-container {
             display: flex;
-            flex-grow: 1; /* Memastikan mengambil sisa ruang vertikal */
-            overflow: hidden; /* Mengatur scroll di konten-container */
+            flex-grow: 1; 
+            overflow: hidden; 
         }
         
         /* Sidebar Navigasi Soal */
@@ -39,7 +39,7 @@
             color: white; 
             padding: 15px;
             overflow-y: auto; 
-            flex-shrink: 0; /* Mencegah sidebar mengecil */
+            flex-shrink: 0; 
             display: flex;
             flex-direction: column;
             border-right: 3px solid #1abc9c;
@@ -52,7 +52,7 @@
             padding-bottom: 20px;
         }
         .nav-btn {
-            background: #7f8c8d; /* Abu-abu default (belum dikerjakan) */
+            background: #7f8c8d; 
             color: white;
             border: none;
             padding: 10px 5px;
@@ -62,15 +62,15 @@
             transition: background 0.2s;
             text-align: center;
         }
-        .nav-btn.answered { background: var(--answered); } /* Hijau */
-        .nav-btn.doubt { background: var(--doubt); } /* Kuning */
+        .nav-btn.answered { background: var(--answered); } 
+        .nav-btn.doubt { background: var(--doubt); } 
         .nav-btn.active { background: var(--active-item); border: 2px solid white; box-shadow: 0 0 0 2px var(--active-item); padding: 8px 3px; }
 
         /* Konten Utama Soal */
         .content-container {
             flex-grow: 1;
             padding: 20px;
-            overflow-y: auto; /* Mengaktifkan scroll pada konten soal */
+            overflow-y: auto; 
             display: flex;
             flex-direction: column;
         }
@@ -90,7 +90,7 @@
             padding-bottom: 10px;
             border-bottom: 1px solid #eee;
         }
-        .soal-text img { max-width: 100%; height: auto; display: block; margin: 10px 0; } /* Untuk gambar di soal */
+        .soal-text img { max-width: 100%; height: auto; display: block; margin: 10px 0; } 
 
         /* Pilihan Jawaban */
         .pilihan-jawaban {
@@ -112,15 +112,13 @@
         }
         .pilihan-jawaban input[type="radio"] {
             margin-right: 10px;
-            /* Menyembunyikan radio button bawaan */
             position: absolute;
             opacity: 0;
             width: 0;
             height: 0;
         }
-        /* Style untuk pilihan yang dipilih */
         .pilihan-jawaban input[type="radio"]:checked + span {
-            background-color: var(--active-item); /* Biru */
+            background-color: var(--active-item); 
             color: white;
             border-color: var(--active-item);
         }
@@ -178,8 +176,8 @@
         .btn-selesai { 
             background: var(--accent-color); 
             color: white;
-            opacity: 1 !important; /* Pastikan selalu terlihat */
-            visibility: visible !important; /* Pastikan selalu visible */
+            opacity: 1 !important; 
+            visibility: visible !important; 
         }
         .btn-selesai:hover { background: #c0392b; }
         
@@ -189,7 +187,7 @@
         #loadingScreen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #2c3e50; /* Warna gelap */
+            background: #2c3e50; 
             color: white;
             display: flex;
             flex-direction: column;
@@ -219,11 +217,11 @@
             .main-container { flex-direction: column; }
             .sidebar { 
                 width: 100%; 
-                height: 50vh; /* Batasi tinggi sidebar di mobile */
-                position: fixed; /* Membuat sidebar menutupi sebagian layar */
-                top: 70px; /* Di bawah header */
+                height: 50vh; 
+                position: fixed; 
+                top: 70px; 
                 left: 0;
-                display: none; /* Sembunyikan secara default di mobile */
+                display: none; 
                 z-index: 999;
                 border-right: none;
                 border-top: 3px solid #1abc9c;
@@ -245,7 +243,6 @@
                 margin-right: 10px;
             }
         }
-        /* Tombol toggle sidebar hanya muncul di HP */
         .toggle-sidebar-btn { display: none; }
         @media (max-width: 768px) {
             .toggle-sidebar-btn { display: inline-block; }
@@ -322,45 +319,43 @@
             const userJK = decodeURIComponent(params.get('jk'));
             const userMapel = decodeURIComponent(params.get('mapel'));
             
-            // Cek parameter, jika tidak ada, redirect ke index.html
             if (!userNama || !userKelas || !userMapel) {
                 alert("Sesi ujian tidak valid. Silakan login ulang.");
                 window.location.href = 'index.html';
                 return;
             }
 
-            // Tampilkan info di header
             document.getElementById('userInfo').innerText = `${userNama} (${userKelas} - ${userMapel})`;
 
-            // >>> KRITIS: SIMPAN DATA SISWA KE LOCAL STORAGE SEGERA SETELAH BERHASIL DIBACA DARI URL <<<
+            // >>> KRITIS: SIMPAN DATA USER KE LOCAL STORAGE <<<
             localStorage.setItem('namaSiswa', userNama);
             localStorage.setItem('kelasSiswa', userKelas);
             localStorage.setItem('jkSiswa', userJK);
             localStorage.setItem('mapelUjian', userMapel);
              
-            // >>> AKHIR KRITIS <<<
-
             // --- 2. VAR & KONSTANTA --
-            // PENTING: Ganti URL dengan URL GAS Anda yang sudah di-deploy!
-            const API_URL = "https://script.google.com/macros/s/AKfycbxRpmKXngixlAZTmMCNQqW-BZOgbK5R3MvwN4Fp5iU9gZAxzWXE9LQVRPVWudQitD0n/exec";
-            let soalData = []; // Untuk menyimpan data soal
-            let jawabanSiswa = []; // Untuk menyimpan jawaban (a, b, c, d, atau e)
+            // =======================================================================
+            // !!! PASTE URL WEB APP GAS BARU ANDA DI SINI !!!
+            const API_URL = "https://script.google.com/macros/s/AKfycbxRpmKXngixlAZTmMCNQqW-BZOgbK5R3MvwN4Fp5iU9gZAxzWXE9LQVRPVWudQitD0n/exec"; // <--- WAJIB GANTI INI
+            // =======================================================================
+            
+            let soalData = []; // Data soal yang dimuat dari Spreadsheet
+            let jawabanSiswa = []; // Jawaban siswa (index 0, 1, 2...)
             let currentSoalIndex = 0; // Index soal yang sedang ditampilkan
-            let raguRagu = []; // Array untuk menandai soal ragu-ragu
-            let timerInterval; // Untuk interval waktu
+            let raguRagu = []; // Status ragu-ragu
+            let timerInterval; 
 
             // --- 3. FUNGSI LOCAL STORAGE (Menjaga sesi) ---
             function saveLocalStorage() {
                 localStorage.setItem('jawabanSiswa', JSON.stringify(jawabanSiswa));
                 localStorage.setItem('currentSoalIndex', currentSoalIndex);
                 localStorage.setItem('raguRagu', JSON.stringify(raguRagu));
-                localStorage.setItem('mapelUjian', userMapel); // Simpan mapel aktif
+                localStorage.setItem('mapelUjian', userMapel); 
             }
 
             function loadLocalStorage() {
-                // Hanya load jika mapel sama
                 if (localStorage.getItem('mapelUjian') !== userMapel) {
-                    return; // Abaikan jika mapel berbeda
+                    return; 
                 }
                 
                 const savedJawaban = localStorage.getItem('jawabanSiswa');
@@ -388,11 +383,10 @@
             }
 
             // --- 4. FUNGSI TIMER ---
-            const totalWaktuUjianMenit = 60; // Set 60 Menit
+            const totalWaktuUjianMenit = 60; 
             let totalSeconds = totalWaktuUjianMenit * 60; 
             let isTimerRunning = false;
             
-            // Cek local storage untuk sisa waktu
             const savedTime = localStorage.getItem('sisaWaktu');
             if (savedTime) {
                 totalSeconds = parseInt(savedTime);
@@ -405,13 +399,13 @@
                     if (totalSeconds <= 0) {
                         clearInterval(timerInterval);
                         alert("Waktu ujian telah habis!");
-                        submitUjian(true); // Kirim jawaban otomatis
+                        submitUjian(true); 
                         return;
                     }
 
                     totalSeconds--;
                     updateTimerDisplay();
-                    localStorage.setItem('sisaWaktu', totalSeconds); // Simpan setiap detik
+                    localStorage.setItem('sisaWaktu', totalSeconds); 
                 }, 1000);
             }
             
@@ -421,13 +415,12 @@
                 const seconds = String(totalSeconds % 60).padStart(2, '0');
                 document.getElementById('timer').innerText = `${hours}:${minutes}:${seconds}`;
 
-                // Ubah warna jika waktu mendekati habis (misal 5 menit terakhir)
                 if (totalSeconds < 300) {
                     document.getElementById('timer').style.backgroundColor = 'var(--accent-color)';
                 }
             }
             
-            updateTimerDisplay(); // Tampilkan waktu awal
+            updateTimerDisplay(); 
 
             // --- 5. RENDER SOAL ---
             function renderSoal(index) {
@@ -435,7 +428,6 @@
 
                 const soal = soalData[index];
                 
-                // Update Index Global
                 currentSoalIndex = index;
                 saveLocalStorage();
 
@@ -453,20 +445,17 @@
                 pilihanKeys.forEach(key => {
                     if (soal[key]) {
                         const pilihanValue = soal[key];
-                        const checked = jawabanSiswa[index] === key ? 'checked' : '';
                         
                         const label = document.createElement('label');
                         
-                        // Membuat radio button
                         const radioInput = document.createElement('input');
                         radioInput.type = 'radio';
                         radioInput.name = 'jawaban';
                         radioInput.value = key;
                         radioInput.id = `choice-${key}`;
                         radioInput.checked = (jawabanSiswa[index] === key);
-                        radioInput.onclick = () => simpanJawaban(key); // Tambahkan event handler
+                        radioInput.onclick = () => simpanJawaban(key); 
                         
-                        // Membuat kontainer untuk label pilihan (A, B, C...) dan konten
                         const choiceContent = document.createElement('span');
                         choiceContent.classList.add('choice-content');
                         
@@ -494,13 +483,10 @@
                 const btnNext = document.getElementById('btnNext');
                 const btnSelesai = document.getElementById('btnSelesai');
 
-                // LOGIKA TOMBOL SELESAI YANG DIPERBAIKI (PASTI MUNCUL)
                 if (index === soalData.length - 1) {
-                    // Jika di soal terakhir
                     btnNext.style.display = 'none';
                     btnSelesai.style.display = 'inline-block';
                 } else {
-                    // Jika bukan soal terakhir
                     btnNext.style.display = 'inline-block';
                     btnSelesai.style.display = 'none';
                 }
@@ -528,10 +514,9 @@
             function simpanJawaban(jawaban) {
                 jawabanSiswa[currentSoalIndex] = jawaban;
                 
-                // Hapus status ragu-ragu jika soal dijawab
                 if (raguRagu[currentSoalIndex]) {
                     raguRagu[currentSoalIndex] = false;
-                    renderSoal(currentSoalIndex); // Render ulang untuk update tombol ragu
+                    renderSoal(currentSoalIndex); 
                 }
                 
                 saveLocalStorage();
@@ -555,7 +540,6 @@
                 if (index >= 0 && index < soalData.length) {
                     renderSoal(index);
                     
-                    // Sembunyikan sidebar di mobile setelah pindah soal
                     if (window.innerWidth <= 768) {
                         document.querySelector('.sidebar').style.display = 'none';
                     }
@@ -573,25 +557,22 @@
                     btn.innerText = index + 1;
                     btn.onclick = () => goToSoal(index);
 
-                    // Status Jawaban
-                    if (jawabanSiswa[index] !== '') {
+                    if (jawabanSiswa[index] !== '' && !raguRagu[index]) {
                         btn.classList.add('answered');
-                        btn.style.backgroundColor = 'var(--answered)'; // Ganti warna
-                    } else {
-                        btn.style.backgroundColor = '#7f8c8d'; // Warna default (Belum Jawab)
-                    }
-
-                    // Status Ragu-ragu
-                    if (raguRagu[index]) {
-                        btn.classList.remove('answered'); // Ragu-ragu override jawaban
+                        btn.style.backgroundColor = 'var(--answered)'; 
+                    } else if (raguRagu[index]) {
+                        btn.classList.remove('answered'); 
                         btn.classList.add('doubt');
-                        btn.style.backgroundColor = 'var(--doubt)'; // Ganti warna ragu
+                        btn.style.backgroundColor = 'var(--doubt)'; 
+                    } else {
+                        btn.classList.remove('answered', 'doubt');
+                        btn.style.backgroundColor = '#7f8c8d'; 
                     }
                     
-                    // Status Aktif
                     if (index === currentSoalIndex) {
                         btn.classList.add('active');
-                        // Warna aktif sudah di handle oleh CSS :active di .nav-btn
+                    } else {
+                         btn.classList.remove('active');
                     }
 
                     navContainer.appendChild(btn);
@@ -602,8 +583,19 @@
             function toggleRaguRagu() {
                 raguRagu[currentSoalIndex] = !raguRagu[currentSoalIndex];
                 saveLocalStorage();
-                renderSoal(currentSoalIndex); // Render ulang untuk update tombol & sidebar
+                renderSoal(currentSoalIndex); 
             }
+            
+            // --- 12. FUNGSI TOGGLE SIDEBAR (Ditambahkan untuk mobile) ---
+            function toggleSidebar() {
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar.style.display === 'flex') {
+                    sidebar.style.display = 'none';
+                } else {
+                    sidebar.style.display = 'flex';
+                }
+            }
+
 
             // --- 10. FUNGSI SUBMIT UJIAN (Mengirim Jawaban ke GAS) ---
             function submitUjian() {
@@ -611,66 +603,58 @@
                     return;
                 }
 
-                // Perubahan yang sudah Anda lakukan sebelumnya (Teks Loading)
                 document.getElementById('loadingScreen').style.display = 'flex';
                 document.querySelector('#loadingScreen h2').innerText = 'Mengirim Jawaban...';
                 document.querySelector('#loadingScreen p').innerText = 'Mohon tunggu, jangan tutup halaman ini.';
 
-                // 1. Ambil data dari Local Storage
                 const namaSiswa = localStorage.getItem('namaSiswa');
                 const kelasSiswa = localStorage.getItem('kelasSiswa');
                 const mapelUjian = localStorage.getItem('mapelUjian');
                 const jkSiswa = localStorage.getItem('jkSiswa'); 
-                const jawabanSiswa = localStorage.getItem('jawabanSiswa'); 
                 
-                // Cek kelengkapan data
-                if (!namaSiswa || !kelasSiswa || !mapelUjian || !jawabanSiswa || !jkSiswa) { 
+                // FIX KRITIS: Kirim jawabanSiswa (array JS) yang sudah di JSON.stringify
+                const jawabanSiswaString = JSON.stringify(jawabanSiswa.filter(a => a !== null)); // Filter null/undefined just in case
+
+                if (!namaSiswa || !kelasSiswa || !mapelUjian || !jawabanSiswaString || !jkSiswa) { 
                     document.getElementById('loadingScreen').style.display = 'none';
                     alert('Gagal mengirim: Data siswa atau jawaban tidak lengkap di Local Storage.');
-                    console.error('Data Kurang:', {namaSiswa, kelasSiswa, mapelUjian, jkSiswa, jawabanSiswa});
+                    console.error('Data Kurang:', {namaSiswa, kelasSiswa, mapelUjian, jkSiswa, jawabanSiswaString});
                     return;
                 }
 
-                // 2. Ubah data menjadi format URL-Encoded (URLSearchParams)
-                const dataToSend = new URLSearchParams();
-                dataToSend.append('action', 'submitUjian'); 
-                dataToSend.append('nama', namaSiswa);
-                dataToSend.append('kelas', kelasSiswa);
-                dataToSend.append('mapel', mapelUjian);
-                dataToSend.append('jawaban', jawabanSiswa); 
+                const formData = new URLSearchParams();
+                formData.append('action', 'submitUjian');
+                formData.append('nama', namaSiswa);
+                formData.append('kelas', kelasSiswa);
+                formData.append('mapel', mapelUjian);
+                formData.append('jawaban', jawabanSiswaString); // Mengirim array JSON stringified
 
-                // 3. Kirim data ke GAS
                 fetch(API_URL, { 
                     method: 'POST',
-                    body: dataToSend
+                    body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('loadingScreen').style.display = 'none';
 
                     if (data.status === 'success') {
-                        // Simpan skor untuk halaman konfirmasi
+                        // Simpan skor dan bersihkan storage
                         localStorage.setItem('skorAkhir', data.skor); 
                         
-                        // Hapus HANYA data ujian (jawaban, waktu, ragu-ragu).
                         localStorage.removeItem('jawabanSiswa');
                         localStorage.removeItem('currentSoalIndex');
                         localStorage.removeItem('raguRagu');
                         localStorage.removeItem('sisaWaktu');
-                        // JANGAN HAPUS data sesi siswa (namaSiswa, kelasSiswa, jkSiswa) di sini!
+                        // JANGAN HAPUS data sesi siswa (nama, kelas, mapel)
 
-                        // >>> PERBAIKAN REDIRECT KRITIS: Sertakan parameter URL lengkap <<<
                         const namaAman = encodeURIComponent(namaSiswa);
                         const kelasAman = encodeURIComponent(kelasSiswa);
                         const jkAman = encodeURIComponent(jkSiswa);
                         const mapelAman = encodeURIComponent(mapelUjian);
                         
-                        // Redirect ke konfirmasi.html DENGAN PARAMETER agar sesi tidak hilang.
-                        // Tambahkan flag 'mode=selesai' untuk penanda di halaman konfirmasi.
                         window.location.href = `konfirmasi.html?nama=${namaAman}&kelas=${kelasAman}&jk=${jkAman}&mapel=${mapelAman}&mode=selesai`; 
                         
                     } else {
-                        // Tampilkan error dari server GAS
                         alert(`Gagal mengirim jawaban: ${data.message || 'Error tidak diketahui.'}`);
                         console.error('Submit Gagal:', data);
                     }
@@ -685,7 +669,6 @@
             // --- 11. FUNGSI LOGOUT (Ditambahkan) ---
             function logout() {
                 if (confirm('Apakah Anda yakin ingin keluar ujian? Semua sesi ujian akan dihapus.')) {
-                    // Hapus data sesi
                     localStorage.removeItem('jawabanSiswa');
                     localStorage.removeItem('currentSoalIndex');
                     localStorage.removeItem('raguRagu');
@@ -694,8 +677,6 @@
                     localStorage.removeItem('namaSiswa');
                     localStorage.removeItem('kelasSiswa');
                     localStorage.removeItem('jkSiswa');
-
-                    // Redirect to login
                     window.location.href = 'index.html';
                 }
             }
@@ -703,61 +684,54 @@
             // --- 13. AMBIL SOAL DARI GOOGLE APPS SCRIPT (GAS) ---
             document.querySelector('#loadingScreen h2').innerText = 'Mengambil Data Soal...';
 
-            fetch(API_URL + '?action=getSoal&mapel=' + encodeURIComponent(userMapel)) // Fetch data soal
+            fetch(API_URL + '?action=getSoal&mapel=' + encodeURIComponent(userMapel)) 
             .then(res => res.json())
             .then(data => {
                 if (data.status === 'success' && data.soal && data.soal.length > 0) {
                     soalData = data.soal;
                     
-                    // Inisialisasi/Load data
                     jawabanSiswa = Array(soalData.length).fill('');
                     raguRagu = Array(soalData.length).fill(false);
                     currentSoalIndex = 0;
                     
-                    // Cek ulang local storage untuk melanjutkan sesi
                     loadLocalStorage(); 
                     
-                    // Inisialisasi tampilan
-                    document.getElementById('loadingScreen').style.display = 'none'; // Sembunyikan loading
-                    renderSoal(currentSoalIndex); // Tampilkan soal pertama
-                    renderNavigasi(); // Buat tombol navigasi
-                    startTimer(); // Mulai Timer
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    renderSoal(currentSoalIndex); 
+                    renderNavigasi(); 
+                    startTimer(); 
                     
                 } else {
                     alert("Gagal memuat soal atau soal tidak ditemukan untuk mata pelajaran ini: " + (data.message || "Data kosong"));
-                    // Hapus local storage sebelum kembali
                     localStorage.removeItem('jawabanSiswa');
                     localStorage.removeItem('currentSoalIndex');
                     localStorage.removeItem('raguRagu');
                     localStorage.removeItem('sisaWaktu');
                     localStorage.removeItem('mapelUjian');
-                    window.location.href = 'index.html'; // Kembali ke halaman login
+                    window.location.href = 'index.html';
                 }
             })
             .catch(err => {
                 document.getElementById('loadingScreen').style.display = 'none';
                 alert("Error koneksi saat memuat soal! Cek URL GAS dan koneksi internet Anda. Detail error di konsol.");
                 console.error("Fetch Soal Error:", err);
-                // Hapus local storage sebelum kembali
                 localStorage.removeItem('jawabanSiswa');
                 localStorage.removeItem('currentSoalIndex');
                 localStorage.removeItem('raguRagu');
                 localStorage.removeItem('sisaWaktu');
                 localStorage.removeItem('mapelUjian');
-                window.location.href = 'index.html'; // Kembali ke halaman login
+                window.location.href = 'index.html'; 
             });
             
-            // Tambahkan fungsi ke global scope (window) agar bisa dipanggil HTML
             window.nextSoal = nextSoal;
             window.prevSoal = prevSoal;
             window.toggleRaguRagu = toggleRaguRagu;
             window.submitUjian = submitUjian;
-            window.logout = logout; // Expose fungsi logout
+            window.logout = logout; 
             window.toggleSidebar = toggleSidebar;
             
         });
         
     </script>
 </body>
-
 </html>
